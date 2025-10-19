@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:go_campus/src/presentation/log_in/login.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_campus/core/util/controller/c_authectication.dart';
+import 'package:go_campus/core/util/services/sv_background.dart';
+import 'package:go_campus/core/util/services/sv_navigaton.dart';
+import 'package:go_campus/src/presentation/authentication/log_in/s_signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  await SvBackground.instance.initializeService();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [BlocProvider(create: (_) => CAuthentication())],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'go_campus',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -34,7 +47,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: RoleSelectionScreen(),
+      home: SSignIn(),
     );
   }
 }
