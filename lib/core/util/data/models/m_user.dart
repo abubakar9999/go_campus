@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_campus/core/util/constants/all_enums.dart';
 import 'package:go_campus/core/util/constants/keys.dart';
 
 class MUser {

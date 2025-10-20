@@ -20,6 +20,8 @@ class Keys {
   static const String createdAt = "createdAt";
   static const String sessionKey = "sessionKey";
   static const String deviceId = "deviceId";
+  static const String student = "student";
+  static const String driver = "driver";
   static const String fullAddress = "fullAddress";
 
 

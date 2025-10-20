@@ -15,7 +15,7 @@ import 'package:go_campus/src/presentation/authentication/log_in/s_signin.dart';
 abstract class AuthenticationEvent {}
 
 class SignInEvent extends AuthenticationEvent {
-  final Role role;
+  final String role;
   final String phone;
   final String pass;
   SignInEvent( {required this.phone, required this.pass, required this.role });
@@ -53,7 +53,7 @@ class CAuthentication extends Bloc<AuthenticationEvent, AuthenticationState> {
         emit(LoadedState(mUser: mUser));
         // start background location service 
         SvBackground.instance.startBackgroundService();
-        SvNavigaton().navigateTo(screen: HomeScreen(role: mUser.uId,));
+        SvNavigaton().navigateTo(screen: HomePage(role: mUser.role,));
       } catch (e) {
         emit(ErrorState(message: e.toString()));
         SvSnackMessage().showSnackMessage(
@@ -71,6 +71,7 @@ class CAuthentication extends Bloc<AuthenticationEvent, AuthenticationState> {
         emit(InitialState());
         SvNavigaton().navigateTo(screen: SSignIn());
       } catch (e) {
+        print("error");
         emit(ErrorState(message: e.toString()));
         SvSnackMessage().showSnackMessage(
           content: "${(state as ErrorState).message}",
@@ -114,11 +115,15 @@ class SvAuthentication implements IAuthentication {
   @override
   Future<void> signUp(MUser mUser) async {
     try {
+      print("1");
+      print("1");
       await firebaseFirestore
           .collection(Keys.users)
-          .doc(mUser.email)
+          .doc(mUser.phone)
           .set(mUser.toMap(forLocal: false));
+      print("2");
     } catch (e) {
+      print("object");
       rethrow;
     }
   }

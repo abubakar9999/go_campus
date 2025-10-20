@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_campus/core/util/controller/c_authectication.dart';
+import 'package:go_campus/core/util/controller/c_theme.dart';
 import 'package:go_campus/core/util/services/sv_background.dart';
 import 'package:go_campus/core/util/services/sv_navigaton.dart';
 import 'package:go_campus/src/presentation/authentication/log_in/s_signin.dart';
@@ -9,12 +11,19 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+
+  await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SvBackground.instance.initializeService();
 
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => CAuthentication())],
+      providers: [
+        BlocProvider(create: (_) => CAuthentication()),
+        BlocProvider(create: (_) => CTheme()),
+        // BlocProvider(create: (_) => CAuthentication()),
+      ],
       child: MyApp(),
     ),
   );
@@ -26,28 +35,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'go_campus',
-      navigatorKey: navigatorKey,
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: SSignIn(),
+    return ScreenUtilInit(
+      designSize: const Size(430, 932), // iPhone X size
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, _) {
+        return BlocBuilder<CTheme, int>(
+          builder:
+              (BuildContext context, int state) => MaterialApp(
+                title: 'go_campus',
+                navigatorKey: navigatorKey,
+                theme: context.read<CTheme>().currentTheme,
+                home: SSignIn(),
+              ),
+        );
+      },
     );
   }
 }

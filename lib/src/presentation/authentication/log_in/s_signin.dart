@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_campus/core/util/constants/all_enums.dart';
+import 'package:go_campus/core/util/constants/extentions/ex_build_context.dart';
+import 'package:go_campus/core/util/constants/keys.dart';
+import 'package:go_campus/core/util/constants/my_color.dart';
 import 'package:go_campus/core/util/controller/c_authectication.dart';
 import 'package:go_campus/core/util/helper_method/hm_validator.dart';
 import 'package:go_campus/core/util/services/sv_navigaton.dart';
@@ -12,7 +15,8 @@ class SSignIn extends StatefulWidget {
 }
 
 class _SSignInState extends State<SSignIn> {
-  Role  _selectedRole = Role.Student;
+  List<String> roleList = [Keys.student, Keys.driver];
+  String  _selectedString = Keys.student;
   final _formKey = GlobalKey<FormState>();
   CAuthentication cAuthentication = currentContext().read();
 
@@ -50,27 +54,29 @@ class _SSignInState extends State<SSignIn> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        DropdownButtonFormField<Role>(
-                          initialValue: _selectedRole,
-                          decoration: InputDecoration(
-                            labelText: "Select Role",
+                        DropdownButtonFormField<String>(
+                          initialValue: _selectedString,
+                          dropdownColor: Colors.white,
+                          decoration:  InputDecoration(
+                            labelText: "Select String",
                             border: OutlineInputBorder(),
                           ),
                           items:
-                              Role.values
+                              roleList
                                   .map(
                                     (role) => DropdownMenuItem(
+                                      
                                       value: role,
-                                      child: Text(role.name),
+                                      child: Text(role),
                                     ),
                                   )
                                   .toList(),
                           onChanged: (value) {
-                            setState(() => _selectedRole = value!);
+                            setState(() => _selectedString = value!);
                           },
                         ),
                         SizedBox(height: 20),
-                        if (_selectedRole == Role.Student)
+                        if (_selectedString == Keys.student)
                           Column(
                             children: [
                               TextFormField(
@@ -136,7 +142,7 @@ class _SSignInState extends State<SSignIn> {
   // login
   void _login() async {
     if (_formKey.currentState!.validate()) {
-      cAuthentication.add(SignInEvent(phone: _phoneController.text, pass: _passwordController.text, role : _selectedRole));
+      cAuthentication.add(SignInEvent(phone: _phoneController.text, pass: _passwordController.text, role : _selectedString));
     }
   }
 

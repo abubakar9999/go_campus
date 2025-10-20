@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_campus/core/util/constants/all_enums.dart';
 import 'package:go_campus/src/presentation/bus_screen/bus.dart';
 import 'package:go_campus/src/presentation/home/widgets/class_routine.dart';
 import 'package:go_campus/src/presentation/home/widgets/notice.dart';

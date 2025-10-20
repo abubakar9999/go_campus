@@ -2,6 +2,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_campus/core/util/constants/keys.dart';
 import 'package:go_campus/core/util/controller/c_authectication.dart';
 import 'package:go_campus/core/util/data/models/m_user.dart';
 import 'package:go_campus/core/util/helper_method/hm_validator.dart';
@@ -42,7 +43,7 @@ class _SSignUpState extends State<SSignUp> {
         uId: currentTime,
         image: '',
         fullAddress: '', 
-        role: '', 
+        role: Keys.student, 
         phone: phone,
       );
       // set loading state.
