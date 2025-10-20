@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_campus/core/util/constants/keys.dart';
 import 'package:go_campus/core/util/controller/c_authectication.dart';
 import 'package:go_campus/core/util/controller/c_theme.dart';
 import 'package:go_campus/core/util/services/sv_background.dart';
 import 'package:go_campus/core/util/services/sv_navigaton.dart';
 import 'package:go_campus/src/presentation/authentication/log_in/s_signin.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:go_campus/src/presentation/home/home.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -46,7 +48,8 @@ class MyApp extends StatelessWidget {
                 title: 'go_campus',
                 navigatorKey: navigatorKey,
                 theme: context.read<CTheme>().currentTheme,
-                home: SSignIn(),
+                home: HomePage(role: Keys.student,),
+                // home: SSignIn(),
               ),
         );
       },

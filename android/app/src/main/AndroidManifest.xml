@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- reference geolocator-->
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<!-- both (FBS,geolocator) -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/> 
+
+
     package="com.example.go_campus">
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,6 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <!-- flutter background service -->
+        <service
+            android:name="id.flutter.flutter_background_service.BackgroundService"
+            android:foregroundServiceType="location|dataSync|connectedDevice"
+        />
 
         <!-- Flutter Plugin Config -->
         <meta-data

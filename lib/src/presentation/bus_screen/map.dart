@@ -77,7 +77,9 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
         title: Text(widget.routeName),
         backgroundColor: Colors.indigo,
       ),
-      body: GoogleMap(
+      body:false? Container(
+        color: Colors.red,
+      ) : GoogleMap(
         onMapCreated: (controller) {
           mapController = controller;
         },
